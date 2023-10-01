@@ -1,5 +1,6 @@
 package br.com.rosivan;
 
+        import br.com.rosivan.exceptions.UnsupportedMathOperationException;
         import org.springframework.web.bind.annotation.*;
 
         import java.util.concurrent.atomic.AtomicLong;
@@ -19,7 +20,7 @@ public class MathController {
                 @PathVariable(value = "numberTwo") String numberTwo
         ) throws Exception {
                 if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-                        throw new Exception();
+                        throw new UnsupportedMathOperationException("Por favor insira os parametros validos");
                 }
                 return convertToDouble(numberOne) + convertToDouble(numberTwo);
         }
