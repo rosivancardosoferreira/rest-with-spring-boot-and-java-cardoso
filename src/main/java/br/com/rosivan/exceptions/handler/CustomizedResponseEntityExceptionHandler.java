@@ -1,6 +1,7 @@
 package br.com.rosivan.exceptions.handler;
 
 import br.com.rosivan.exceptions.ExceptionResponse;
+import br.com.rosivan.exceptions.ResourceNotFoundException;
 import br.com.rosivan.exceptions.UnsupportedMathOperationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,21 +17,25 @@ import java.util.Date;
 @RestController
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) { // PARA EXCEÇÕES GENÉRICAS
+    @ExceptionHandler(Exception.class) // EXCESSOES GENERICAS DO JAVA
+    public final ResponseEntity <ExceptionResponse> handleAllExceptions(
+            Exception ex, WebRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(
                 new Date(),
                 ex.getMessage(),
-                request.getDescription(false));
+                request.getDescription(false)
+        );
         return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(UnsupportedMathOperationException.class)
-    public final ResponseEntity<ExceptionResponse> handleBadRequestExceptions(Exception ex, WebRequest request) { // PARA EXCEÇÕES DE BAD_REQUEST // DADOS PASSADOSS ERRADOS
+    @ExceptionHandler(ResourceNotFoundException.class) // BAD REQUEST
+    public final ResponseEntity <ExceptionResponse> handleNotFoundExceptions(
+            Exception ex, WebRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(
                 new Date(),
                 ex.getMessage(),
-                request.getDescription(false));
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+                request.getDescription(false)
+        );
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 }
