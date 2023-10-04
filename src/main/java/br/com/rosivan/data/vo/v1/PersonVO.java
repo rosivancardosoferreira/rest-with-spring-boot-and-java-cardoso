@@ -1,20 +1,30 @@
 package br.com.rosivan.data.vo.v1;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import java.io.Serializable;
 import java.util.Objects;
 
-
+@JsonPropertyOrder({"id", "address", "first_name", "last_name", "gender"})
 public class PersonVO implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     private Long id;
+
+    @JsonProperty("first_name")
     private String firstName;
+
+    @JsonProperty("last_name")
     private String lastName;
     private String address;
+
+    @JsonIgnore
     private String gender;
 
-    // CONSTRUTOR
     public PersonVO() {}
 
     public Long getId() {
@@ -58,15 +68,51 @@ public class PersonVO implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PersonVO person = (PersonVO) o;
-        return id.equals(person.id) && firstName.equals(person.firstName) && lastName.equals(person.lastName) && address.equals(person.address) && gender.equals(person.gender);
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((address == null) ? 0 : address.hashCode());
+        result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+        result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+        return result;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, address, gender);
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        PersonVO other = (PersonVO) obj;
+        if (address == null) {
+            if (other.address != null)
+                return false;
+        } else if (!address.equals(other.address))
+            return false;
+        if (firstName == null) {
+            if (other.firstName != null)
+                return false;
+        } else if (!firstName.equals(other.firstName))
+            return false;
+        if (gender == null) {
+            if (other.gender != null)
+                return false;
+        } else if (!gender.equals(other.gender))
+            return false;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (lastName == null) {
+            if (other.lastName != null)
+                return false;
+        } else if (!lastName.equals(other.lastName))
+            return false;
+        return true;
     }
 }
