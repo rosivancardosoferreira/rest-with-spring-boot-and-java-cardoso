@@ -4,6 +4,8 @@ import br.com.rosivan.controllers.PersonController;
 import br.com.rosivan.data.vo.v1.PersonVO;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import br.com.rosivan.exceptions.RequiredObjectIsNullException;
 import br.com.rosivan.exceptions.ResourceNotFoundException;
 import br.com.rosivan.mapper.DozerMapper;
 import br.com.rosivan.model.Person;
@@ -47,8 +49,7 @@ public class PersonServices {
     }
 
     public PersonVO create(PersonVO person) {
-
-        //if (person == null) throw new RequiredObjectIsNullException();
+        if (person == null) throw new RequiredObjectIsNullException();
 
         logger.info("Creating one person!");
         var entity = DozerMapper.parseObject(person, Person.class);
@@ -59,7 +60,7 @@ public class PersonServices {
 
     public PersonVO update(PersonVO person) {
 
-        //if (person == null) throw new RequiredObjectIsNullException();
+        if (person == null) throw new RequiredObjectIsNullException();
 
         logger.info("Updating one person!");
 
