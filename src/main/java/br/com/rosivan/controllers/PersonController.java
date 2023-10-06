@@ -30,7 +30,6 @@ public class PersonController {
     public PersonVO findById(@PathVariable(value = "id") Long id) {
         return service.findById(id);
     }
-
     @PostMapping(
             consumes = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML,
                     MediaType.APPLICATION_YML  },
@@ -48,7 +47,6 @@ public class PersonController {
     public PersonVO update(@RequestBody PersonVO person) {
         return service.update(person);
     }
-
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
